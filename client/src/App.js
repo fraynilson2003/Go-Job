@@ -1,35 +1,80 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+// Components
 import LandingPage from "./components/landingPage/landingPage";
+import FormContact from "./containers/Form/FormContact";
+// import LandingPage from "./components/landingPage/landingPage";
 import Navbar from "./components/navbarPortada/NavBar";
-import FormContact from "./components/FormContact/FormContact";
 import Professionals from "./components/Profesional/Professionals";
 import DetailCard from "./components/DetailCard/detailCard";
-import Admin from "./components/Dashboard/Admi";
+import Admin from "./components/DashboardPrueba/UsersAdmin";
+import Private from "./components/auth0/Private";
 
+// Containers
+import Register from "./containers/register/Register";
+import Login from "./containers/login/Login";
+import AddJob from "./containers/addJob/AddJob";
 
-// import styles from "./style";
+import axios from "axios";
+import Users from "./components/Users/Users";
+import { useEffect } from "react";
+import { getService, getUsers } from "./redux/actions/actions";
+import { useDispatch } from "react-redux";
+import Services from "./components/services/Services";
+import FormCreateUser from "./components/FormCreateUser/FormCreateUser";
+import Jobs from "./components/jobs/Jobs";
+import Job from "./components/CardJobs/Job";
+import FormCreateService from "./components/FormCreateService/FormCreateService";
+
+axios.defaults.baseURL = "http://localhost:3005/";
+axios.defaults.headers.common["Authorization"] =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiQXoiLCJsYXN0TmFtZSI6IkFtZWZnY2EiLCJlbWFpbCI6ImZkYWZmc2ZwQGVtYWlsLmNvbSIsInVzZXIiOiJjYXAyMzMyIiwiY2l0eSI6IkR1YmFpIiwicGhvbmUiOjM0ODczNTM1LCJhZGRyZXNzIjoiQXYuIFRyb3lhIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjc3MDA5ODY5LCJleHAiOjE2Nzk2MDE4Njl9.Y8goayh2w8lbZt1qqZDq9hYwkxIIAKnw9dFo74sakUA";
 
 function App() {
+  const dispatch = useDispatch();
+  // let users = useSelector((state) => state.users);
+  // useEffect(() => {
+  //   // dispatch(getUsers()); // Cambiar cuando está posisionado en admin
+  //   // dispatch(getService(1, 5)); // Cambiar cuando se presiona onClick() en boton Services (NavBar)
+  // }, []);
+
   return (
     <>
-      {/* <div className="w-[80%] p-4 rounded-[20px] bg-color1">
-        <h1 className="text-dimBlue">Hola Mundo</h1>
-      </div>
-      <h2 className={styles.boxWidth}>Prueba</h2> */}
       <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route path="/contact" component={FormContact} />
-          <Route path='/profesionals' component={Professionals} />
-          <Route path='/admin' component={Admin} />
+        <Routes>
+          {/* Components */}
+          <Route exact path="/" element={<LandingPage />} />
+          <Route exact path="/contact" element={<FormContact />} />
+          <Route exact path="/service" element={<Professionals />} />
+          <Route exact path="/user" element={<Users />} />
+          <Route exact path="/service" element={<Services />} />
+          <Route path="/user/profile" element={<Private />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/contact" element={<FormContact />} />
+          <Route exact path="/user" element={<Users />} />
+          <Route path="/service" element={<Professionals />} />
+          <Route path="/job" element={<Job />} />
+          <Route path="/createService" element={<FormCreateService />} />
 
+          {/* <Route path="/createPablo" element={FormCreateUser} /> */}
           <Route
             path="/detail/:id"
             render={({ match }) => <DetailCard id={match.params.id} />}
           />
-        </Switch>
+
+          {/* ADMIN */}
+          <Route exact path="/admin" element={<Admin />} />
+          <Route exact path="/admin/service" element={<Services />} />
+          <Route exact path="/admin/job" element={<AddJob />} />
+
+          {/* Containers */}
+          <Route exact path="/user/register" element={<Register />} />
+          <Route path="/user/login" element={<Login />} />
+          <Route path="/job" element={<AddJob />} />
+          <Route exact path="/user/register" component={Register} />
+          <Route path="/user/login" element={Login} />
+        </Routes>
       </BrowserRouter>
-      {/* <LandingPage /> */}
     </>
   );
 }

@@ -1,32 +1,57 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 const serviceModel = (sequelize) => {
   // defino el modelo
-  sequelize.define('Service', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    tittle: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    location: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    presupuesto: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
-  
+  sequelize.define(
+    "Service",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      tittle: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      state: {
+        type: DataTypes.STRING,
+        defaultValue: "pendiente",
+        validate: {
+          isIn: [["pendiente", "proceso", "terminado"]],
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      provincia: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      ciudad: {
+          type: DataTypes.STRING,
+          allowNull: false,
+      },
+      direccion: {
+          type: DataTypes.STRING,
+      },
+      presupuesto: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      // stripepriceId:{
+      //   type: DataTypes.STRING,
+      //   //allowNull: false
+      // },
+      score: {
+        type: DataTypes.INTEGER,
+        default: 0,
+      }
 
-  },{timestamps: false });
+    },
+    { timestamps: false }
+  );
 };
 
-module.exports = serviceModel
+module.exports = serviceModel;
