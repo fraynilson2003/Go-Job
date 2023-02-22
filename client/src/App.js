@@ -7,7 +7,7 @@ import FormContact from "./containers/Form/FormContact";
 import Navbar from "./components/navbarPortada/NavBar";
 import Professionals from "./components/Profesional/Professionals";
 import DetailCard from "./components/DetailCard/detailCard";
-import Admin from "./components/Dashboard/Admi";
+import Admin from "./components/DashboardPrueba/UsersAdmin";
 import Private from "./components/auth0/Private";
 
 // Containers
